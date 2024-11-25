@@ -1,5 +1,9 @@
 # Fetch Receipt Processor Implementation
 
+## Prerequisites
+
+Bun - https://bun.sh/docs/installation
+
 ## Install & Run - Manual
 
 To install dependencies:
