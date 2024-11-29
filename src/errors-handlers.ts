@@ -12,5 +12,5 @@ export const storageErrorHandler = (
 		return;
 	}
 
-	res.status(500).send("Server error");
+	next(err);
 };

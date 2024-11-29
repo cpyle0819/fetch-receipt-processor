@@ -19,10 +19,10 @@ type Item = {
 };
 
 export class Receipt {
-	retailer: string;
-	date: Date;
-    items: Item[];
-	total: number;
+	readonly retailer: string;
+	readonly date: Date;
+	readonly items: Item[];
+	readonly total: number;
 
 	constructor(json: Record<string, unknown>) {
 		this.retailer = this.buildRetailer(json);
@@ -54,14 +54,19 @@ export class Receipt {
 			throw new InvalidReceiptFieldError('"time" field missing or empty.');
 		}
 
-		if (typeof json.purchaseDate !== "string" || typeof json.purchaseTime !== "string") {
+		if (
+			typeof json.purchaseDate !== "string" ||
+			typeof json.purchaseTime !== "string"
+		) {
 			throw new InvalidReceiptFieldError(
 				'Expected "date" and "time" fields to be type of "string".',
 			);
 		}
 
 		// Assuming dates are in UTC?
-		const date = new Date(`${json.purchaseDate.trim()}T${json.purchaseTime.trim()}Z`);
+		const date = new Date(
+			`${json.purchaseDate.trim()}T${json.purchaseTime.trim()}Z`,
+		);
 
 		if (date instanceof Date && !Number.isNaN(date.valueOf())) {
 			return date;

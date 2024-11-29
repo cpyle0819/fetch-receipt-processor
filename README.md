@@ -13,16 +13,16 @@ bun install
 bun run src/index.ts
 ```
 
-## Install & Run - Docker
+## Test - Manual
+```bash
+bun test
+```
+
+## Install, Test, & Run - Docker
 
 ```bash
 docker build --pull -t <image_name> .
 docker run -d -p 3000:3000 <image_name>
-```
-
-## Test
-```bash
-bun test
 ```
 
 ## Q&A

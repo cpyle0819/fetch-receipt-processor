@@ -9,8 +9,8 @@ describe("/receipts/:receipt/points", () => {
 		expect(status).toBe(404);
 	});
 
-	test("found", async () => {
-		const storedValue = {
+	test("example receipt 1", async () => {
+		const validReceipt = {
 			retailer: "Target",
 			purchaseDate: "2022-01-01",
 			purchaseTime: "13:01",
@@ -41,10 +41,45 @@ describe("/receipts/:receipt/points", () => {
 		const agent = supertest(app);
 		const {
 			body: { id },
-		} = await agent.post("/receipts/process").send(storedValue);
+		} = await agent.post("/receipts/process").send(validReceipt);
 		const {
 			body: { points },
 		} = await agent.get(`/receipts/${id}/points`);
-		expect(points).toEqual(32);
+		expect(points).toEqual(28);
+	});
+
+	test("example receipt 2", async () => {
+		const validReceipt = {
+			retailer: "M&M Corner Market",
+			purchaseDate: "2022-03-20",
+			purchaseTime: "14:33",
+			items: [
+				{
+					shortDescription: "Gatorade",
+					price: "2.25",
+				},
+				{
+					shortDescription: "Gatorade",
+					price: "2.25",
+				},
+				{
+					shortDescription: "Gatorade",
+					price: "2.25",
+				},
+				{
+					shortDescription: "Gatorade",
+					price: "2.25",
+				},
+			],
+			total: "9.00",
+		};
+		const agent = supertest(app);
+		const {
+			body: { id },
+		} = await agent.post("/receipts/process").send(validReceipt);
+		const {
+			body: { points },
+		} = await agent.get(`/receipts/${id}/points`);
+		expect(points).toEqual(109);
 	});
 });
